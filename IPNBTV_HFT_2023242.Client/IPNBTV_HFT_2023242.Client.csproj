@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IPNBTV_HFT_2023242.Logic\IPNBTV_HFT_2023242.Logic.csproj" />
     <ProjectReference Include="..\IPNBTV_HFT_2023242.Models\IPNBTV_HFT_2023242.Models.csproj" />
   </ItemGroup>
 

@@ -1,42 +1,65 @@
 ﻿using IPNBTV_HFT_2023242.Models;
 using IPNBTV_HFT_2023242.Repository;
+using Microsoft.Extensions.Caching.Memory;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace IPNBTV_HFT_2023242.Logic
 {
-    public class RentalShopLogic
+    public class RentalShopLogic : IRentalShopLogic
     {
-        IRepository<RentalShop> repo;
+        IRepository<RentalShop> rentalShopRepository;
 
         public RentalShopLogic(IRepository<RentalShop> repo)
         {
-            this.repo = repo;
+            this.rentalShopRepository = repo;
         }
 
         public void Create(RentalShop item)
         {
-            repo.Create(item);
+            if (item.Name.Length < 3)
+            {
+                throw new ArgumentException("Name is too short");
+            }
+            rentalShopRepository.Create(item);
         }
 
         public void Delete(int id)
         {
-            repo.Delete(id);
+            if (id < 1)
+            {
+                throw new ArgumentException("Invalid Id");
+            }
+            rentalShopRepository.Delete(id);
         }
 
         public RentalShop Read(int id)
         {
-            return repo.Read(id);
+            var rentalShop = rentalShopRepository.Read(id);
+            if (rentalShop == null)
+            {
+                throw new ArgumentException("RentalShop not exists");
+            }
+            return rentalShop;
         }
 
-        public IQueryable<RentalShop> ReadAll()
+        public IEnumerable<RentalShop> ReadAll()
         {
-            return repo.ReadAll();
+            if (rentalShopRepository.ReadAll() == null)
+            {
+                throw new ArgumentException("Empty database");
+            }
+            return rentalShopRepository.ReadAll();
         }
 
         public void Update(RentalShop item)
         {
-            repo.Update(item);
+            if (item.Name.Length < 3 && item.Id < 1)
+            {
+                throw new ArgumentException("Invalid item");
+            }
+            rentalShopRepository.Update(item);
         }
     }
 }
