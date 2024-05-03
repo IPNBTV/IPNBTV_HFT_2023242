@@ -9,11 +9,11 @@ namespace IPNBTV_HFT_2023242.Logic
 {
     public class RentalShopLogic : IRentalShopLogic
     {
-        IRepository<RentalShop> rentalShopRepository;
+        IRepository<RentalShop> repo;
 
         public RentalShopLogic(IRepository<RentalShop> repo)
         {
-            this.rentalShopRepository = repo;
+            this.repo = repo;
         }
 
         public void Create(RentalShop item)
@@ -22,7 +22,7 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Name is too short");
             }
-            rentalShopRepository.Create(item);
+            repo.Create(item);
         }
 
         public void Delete(int id)
@@ -31,12 +31,12 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Invalid Id");
             }
-            rentalShopRepository.Delete(id);
+            repo.Delete(id);
         }
 
         public RentalShop Read(int id)
         {
-            var rentalShop = rentalShopRepository.Read(id);
+            var rentalShop = repo.Read(id);
             if (rentalShop == null)
             {
                 throw new ArgumentException("RentalShop not exists");
@@ -46,11 +46,11 @@ namespace IPNBTV_HFT_2023242.Logic
 
         public IEnumerable<RentalShop> ReadAll()
         {
-            if (rentalShopRepository.ReadAll() == null)
+            if (repo.ReadAll() == null)
             {
                 throw new ArgumentException("Empty database");
             }
-            return rentalShopRepository.ReadAll();
+            return repo.ReadAll();
         }
 
         public void Update(RentalShop item)
@@ -59,7 +59,7 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Invalid item");
             }
-            rentalShopRepository.Update(item);
+            repo.Update(item);
         }
     }
 }
