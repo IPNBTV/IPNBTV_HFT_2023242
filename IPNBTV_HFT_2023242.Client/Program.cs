@@ -6,7 +6,7 @@ namespace IPNBTV_HFT_2023242.Client
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }

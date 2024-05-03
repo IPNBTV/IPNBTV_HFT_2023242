@@ -24,6 +24,6 @@ namespace IPNBTV_HFT_2023242.Models
         public string CustomerName { get; set; }
 
         [NotMapped]
-        public Car Car { get; set; }
+        public virtual Car Car { get; set; }
     }
 }

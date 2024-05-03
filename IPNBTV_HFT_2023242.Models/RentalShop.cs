@@ -28,6 +28,6 @@ namespace IPNBTV_HFT_2023242.Models
         public string Phone { get; set; }
 
         [NotMapped]
-        public ICollection<Car> Cars { get; set; }
+        public virtual ICollection<Car> Cars { get; set; }
     }
 }

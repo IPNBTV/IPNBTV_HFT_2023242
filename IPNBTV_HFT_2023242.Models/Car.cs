@@ -30,9 +30,9 @@ namespace IPNBTV_HFT_2023242.Models
         public int RentalShopId { get; set; }
 
         [NotMapped]
-        public RentalShop RentalShop { get; set; }
+        public virtual RentalShop RentalShop { get; set; }
 
         [NotMapped]
-        public ICollection<RentalEvent> RentalEvents { get; set; }
+        public virtual ICollection<RentalEvent> RentalEvents { get; set; }
     }
 }
