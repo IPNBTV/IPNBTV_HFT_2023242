@@ -23,8 +23,7 @@ namespace IPNBTV_HFT_2023242.Repository
         {
             if (!optionsBuilder.IsConfigured)
             {
-                string conn = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\RentalShop.mdf;Integrated Security=True;MultipleActiveResultSets=True";
-                optionsBuilder.UseLazyLoadingProxies().UseSqlServer(conn);
+                optionsBuilder.UseLazyLoadingProxies().UseInMemoryDatabase("db");
             }
         }
 
