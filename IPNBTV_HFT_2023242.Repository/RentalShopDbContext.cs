@@ -23,5 +23,7 @@ namespace IPNBTV_HFT_2023242.Repository
                 optionsBuilder.UseSqlServer(conn);
             }
         }
+
+        
     }
 }
