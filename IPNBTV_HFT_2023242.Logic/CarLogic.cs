@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IPNBTV_HFT_2023242.Logic
 {
-    public class CarLogic
+    public class CarLogic : ICarLogic
     {
         IRepository<Car> repo;
 
