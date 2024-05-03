@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IPNBTV_HFT_2023242.Logic
 {
-    public class RentalEventLogic
+    public class RentalEventLogic : IRentalEventLogic
     {
         IRepository<RentalEvent> repo;
 
