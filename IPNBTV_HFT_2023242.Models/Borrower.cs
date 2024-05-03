@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IPNBTV_HFT_2023242.Models
 {
-    class Borrower
+    public class Borrower
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

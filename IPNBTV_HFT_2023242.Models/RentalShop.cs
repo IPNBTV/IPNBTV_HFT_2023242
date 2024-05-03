@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IPNBTV_HFT_2023242.Models
 {
-    class RentalShop
+    public class RentalShop
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
