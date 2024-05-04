@@ -9,11 +9,13 @@ namespace IPNBTV_HFT_2023242.Logic
 {
     public class RentalShopLogic : IRentalShopLogic
     {
-        IRepository<RentalShop> repo;
+        IRepository<RentalShop> shopRepo;
+        IRepository<Car> carRepo;
 
-        public RentalShopLogic(IRepository<RentalShop> repo)
+        public RentalShopLogic(IRepository<RentalShop> shopRepo, IRepository<Car> carRepo)
         {
-            this.repo = repo;
+            this.shopRepo = shopRepo;
+            this.carRepo = carRepo;
         }
 
         public void Create(RentalShop item)
@@ -22,7 +24,7 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Name is too short");
             }
-            repo.Create(item);
+            shopRepo.Create(item);
         }
 
         public void Delete(int id)
@@ -31,12 +33,12 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Invalid Id");
             }
-            repo.Delete(id);
+            shopRepo.Delete(id);
         }
 
         public RentalShop Read(int id)
         {
-            var rentalShop = repo.Read(id);
+            var rentalShop = shopRepo.Read(id);
             if (rentalShop == null)
             {
                 throw new ArgumentException("RentalShop not exists");
@@ -46,11 +48,11 @@ namespace IPNBTV_HFT_2023242.Logic
 
         public IEnumerable<RentalShop> ReadAll()
         {
-            if (repo.ReadAll() == null)
+            if (shopRepo.ReadAll() == null)
             {
                 throw new ArgumentException("Empty database");
             }
-            return repo.ReadAll();
+            return shopRepo.ReadAll();
         }
 
         public void Update(RentalShop item)
@@ -59,7 +61,32 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Invalid item");
             }
-            repo.Update(item);
+            shopRepo.Update(item);
+        }
+
+        public IEnumerable<RentalShop> GetRentalShopsWithCarColor(string color)
+        {
+            var result = carRepo.ReadAll()
+                                .Where(t => t.Color == color)
+                                .Select(t => new RentalShop
+                                {
+                                    Id = t.RentalShopId,
+                                    Name = shopRepo.Read(t.RentalShopId).Name,
+                                    City = shopRepo.Read(t.RentalShopId).City,
+                                    Address = shopRepo.Read(t.RentalShopId).Address,
+                                    Phone = shopRepo.Read(t.RentalShopId).Phone,
+                                    Cars = shopRepo.Read(t.RentalShopId).Cars
+                                });
+
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
+                throw new ArgumentException("No rental shop found with this color car");
+            }
+
         }
     }
 }

@@ -16,9 +16,11 @@ namespace IPNBTV_HFT_2023242.Client
 
             IRepository<RentalEvent> eventRepo = new RentalEventRepository(ctx);
             IRepository<Car> carRepo = new CarRepository(ctx);
+            IRepository<RentalShop> shopRepo = new RentalShopRepository(ctx);
 
             IRentalEventLogic eventLogic = new RentalEventLogic(eventRepo, carRepo);
             ICarLogic carLogic = new CarLogic(carRepo, eventRepo);
+            IRentalShopLogic shopLogic = new RentalShopLogic(shopRepo, carRepo);
 
             DateTime startDate = new DateTime(2020, 05, 05);
             DateTime endDate = DateTime.Now;
@@ -30,6 +32,8 @@ namespace IPNBTV_HFT_2023242.Client
             var mostRentedCarInRentalShop = carLogic.GetMostRentedCarsInRentalShop(1);
 
             var numberOfRentalEventsForCarInRentalShop = carLogic.GetNumberOfRentalEventsForCarInShop(4, 1);
+
+            var rentalShopsWithCarColor = shopLogic.GetRentalShopsWithCarColor("silver");
 
             ;
         }

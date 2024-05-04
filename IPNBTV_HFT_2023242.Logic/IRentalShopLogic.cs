@@ -10,5 +10,6 @@ namespace IPNBTV_HFT_2023242.Logic
         RentalShop Read(int id);
         IEnumerable<RentalShop> ReadAll();
         void Update(RentalShop item);
+        IEnumerable<RentalShop> GetRentalShopsWithCarColor(string color);
     }
 }
