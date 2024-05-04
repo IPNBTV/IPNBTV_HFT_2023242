@@ -18,6 +18,7 @@ namespace IPNBTV_HFT_2023242.Client
             IRepository<Car> carRepo = new CarRepository(ctx);
 
             IRentalEventLogic eventLogic = new RentalEventLogic(eventRepo, carRepo);
+            ICarLogic carLogic = new CarLogic(carRepo, eventRepo);
 
             DateTime startDate = new DateTime(2020, 05, 05);
             DateTime endDate = DateTime.Now;
@@ -26,7 +27,9 @@ namespace IPNBTV_HFT_2023242.Client
 
             var customerWithAutomatic = eventLogic.GetCustomersWithAutomaticTransmission();
 
-            var mostRentedCarInRentalShop = eventLogic.GetMostRentedCarsInRentalShop(0);
+            var mostRentedCarInRentalShop = carLogic.GetMostRentedCarsInRentalShop(1);
+
+            var numberOfRentalEventsForCarInRentalShop = carLogic.GetNumberOfRentalEventsForCarInShop(4, 1);
 
             ;
         }

@@ -11,10 +11,12 @@ namespace IPNBTV_HFT_2023242.Logic
     public class CarLogic : ICarLogic
     {
         IRepository<Car> carRepo;
+        IRepository<RentalEvent> eventRepo;
 
-        public CarLogic(IRepository<Car> carRepo)
+        public CarLogic(IRepository<Car> carRepo, IRepository<RentalEvent> eventRepo)
         {
             this.carRepo = carRepo;
+            this.eventRepo = eventRepo;
         }
 
         public void Create(Car item)
@@ -90,6 +92,18 @@ namespace IPNBTV_HFT_2023242.Logic
             else
             {
                 throw new ArgumentException("Ivalid rentalshopId");
+            }
+        }
+
+        public int GetNumberOfRentalEventsForCarInShop(int carId, int rentalShopId)
+        {
+            if (carId > 0 || rentalShopId > 0)
+            {
+                return eventRepo.ReadAll().Count(t => t.CarId == carId && carRepo.Read(t.CarId).RentalShopId == rentalShopId);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid Id");
             }
         }
 
