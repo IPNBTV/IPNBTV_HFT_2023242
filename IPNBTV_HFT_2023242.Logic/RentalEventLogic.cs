@@ -10,11 +10,13 @@ namespace IPNBTV_HFT_2023242.Logic
 {
     public class RentalEventLogic : IRentalEventLogic
     {
-        IRepository<RentalEvent> repo;
+        IRepository<RentalEvent> eventRepo;
+        IRepository<Car> carRepo;
 
-        public RentalEventLogic(IRepository<RentalEvent> repo)
+        public RentalEventLogic(IRepository<RentalEvent> eventRepo, IRepository<Car> carRepo)
         {
-            this.repo = repo;
+            this.eventRepo = eventRepo;
+            this.carRepo = carRepo;
         }
 
         public void Create(RentalEvent item)
@@ -23,7 +25,7 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Invalid Id");
             }
-            repo.Create(item);
+            eventRepo.Create(item);
         }
 
         public void Delete(int id)
@@ -32,12 +34,12 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Invalid Id");
             }
-            repo.Delete(id);
+            eventRepo.Delete(id);
         }
 
         public RentalEvent Read(int id)
         {
-            var rentalEvent = repo.Read(id);
+            var rentalEvent = eventRepo.Read(id);
             if (rentalEvent == null)
             {
                 throw new ArgumentException("Car not exists");
@@ -47,11 +49,11 @@ namespace IPNBTV_HFT_2023242.Logic
 
         public IEnumerable<RentalEvent> ReadAll()
         {
-            if (repo.ReadAll() == null)
+            if (eventRepo.ReadAll() == null)
             {
                 throw new ArgumentException("Empty database");
             }
-            return repo.ReadAll();
+            return eventRepo.ReadAll();
         }
 
         public void Update(RentalEvent item)
@@ -60,7 +62,58 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Invalid Id");
             }
-            repo.Update(item);
+            eventRepo.Update(item);
         }
+
+        // The most rented car in a certain period
+        public MostRentedCarInfo GetMostRentedCar(DateTime startDate, DateTime endDate)
+        {
+            var mostRentedCar = eventRepo.ReadAll()
+                              .Where(re => re.RentalDate >= startDate && re.RentalDate <= endDate)
+                              .GroupBy(re => re.CarId)
+                              .OrderByDescending(g => g.Count())
+                              .Select(g => new
+                              {
+                                  Car = carRepo.Read(g.Key),
+                                  RentalDate = eventRepo.ReadAll().Where(t => t.CarId == g.Key).FirstOrDefault().RentalDate,
+                                  ReturnDate = eventRepo.ReadAll().Where(t => t.CarId == g.Key).FirstOrDefault().ReturnDate
+                              })
+                              .FirstOrDefault();
+
+            MostRentedCarInfo mostRentedCarInfo = new MostRentedCarInfo
+            {
+                Car = mostRentedCar.Car,
+                RentalTime = CalculateRentalTime(mostRentedCar.RentalDate, mostRentedCar.ReturnDate, startDate, endDate)
+            };
+
+            if (mostRentedCar != null)
+            {
+                return mostRentedCarInfo;
+            }
+            else
+            {
+                throw new ArgumentException("No car found in this peroid");
+            }
+        }
+
+        private TimeSpan CalculateRentalTime(DateTime rentalDate, DateTime returnDate, DateTime startDate, DateTime endDate)
+        {
+            TimeSpan totalRentalTime = TimeSpan.Zero;
+
+            var rentalStartDate = rentalDate > startDate ? rentalDate : startDate;
+            var rentalEndDate = returnDate < endDate ? returnDate : endDate;
+
+            totalRentalTime += rentalEndDate - rentalStartDate;
+
+            return totalRentalTime;
+        }
+
+        public class MostRentedCarInfo
+        {
+            public Car Car { get; set; }
+            public TimeSpan RentalTime { get; set; }
+        }
+
+
     }
 }

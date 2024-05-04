@@ -1,4 +1,5 @@
 ﻿using IPNBTV_HFT_2023242.Models;
+using System;
 using System.Collections.Generic;
 
 namespace IPNBTV_HFT_2023242.Logic
@@ -7,6 +8,7 @@ namespace IPNBTV_HFT_2023242.Logic
     {
         void Create(RentalEvent item);
         void Delete(int id);
+        RentalEventLogic.MostRentedCarInfo GetMostRentedCar(DateTime startDate, DateTime endDate);
         RentalEvent Read(int id);
         IEnumerable<RentalEvent> ReadAll();
         void Update(RentalEvent item);
