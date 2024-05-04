@@ -4,6 +4,7 @@ using IPNBTV_HFT_2023242.Repository;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections;
+using System.Linq;
 
 namespace IPNBTV_HFT_2023242.Client
 {
@@ -22,6 +23,10 @@ namespace IPNBTV_HFT_2023242.Client
             DateTime endDate = DateTime.Now;
 
             var mostRentedCar = eventLogic.OrderByMostRentals(startDate, endDate);
+
+            var customerWithAutomatic = eventLogic.GetCustomersWithAutomaticTransmission();
+
+            var mostRentedCarInRentalShop = eventLogic.GetMostRentedCarsInRentalShop(0);
 
             ;
         }

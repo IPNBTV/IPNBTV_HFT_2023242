@@ -10,5 +10,6 @@ namespace IPNBTV_HFT_2023242.Logic
         Car Read(int id);
         IEnumerable<Car> ReadAll();
         void Update(Car item);
+        IEnumerable<CarLogic.MostRentedCarInfo> GetMostRentedCarsInRentalShop(int rentalShopId);
     }
 }

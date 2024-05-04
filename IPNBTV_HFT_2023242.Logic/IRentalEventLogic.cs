@@ -8,9 +8,10 @@ namespace IPNBTV_HFT_2023242.Logic
     {
         void Create(RentalEvent item);
         void Delete(int id);
-        IEnumerable<RentalEventLogic.MostRentedCarInfo> OrderByMostRentals(DateTime startDate, DateTime endDate);
         RentalEvent Read(int id);
         IEnumerable<RentalEvent> ReadAll();
         void Update(RentalEvent item);
+        IEnumerable<RentalEventLogic.MostRentedCarInfo> OrderByMostRentals(DateTime startDate, DateTime endDate);
+        IEnumerable<string> GetCustomersWithAutomaticTransmission();
     }
 }

@@ -67,9 +67,9 @@ namespace IPNBTV_HFT_2023242.Logic
 
         public IEnumerable<MostRentedCarInfo> OrderByMostRentals(DateTime startDate, DateTime endDate)
         {
-            var mostRentedCar = eventRepo.ReadAll()
-                              .Where(re => re.RentalDate >= startDate && re.RentalDate <= endDate)
-                              .GroupBy(re => re.CarId)
+            var result = eventRepo.ReadAll()
+                              .Where(t => t.RentalDate >= startDate && t.RentalDate <= endDate)
+                              .GroupBy(t => t.CarId)
                               .OrderByDescending(g => g.Count())
                               .Select(g => new MostRentedCarInfo
                               {
@@ -77,13 +77,30 @@ namespace IPNBTV_HFT_2023242.Logic
                                   NumberOfRentalEvents = g.Count()
                               });
 
-            if (mostRentedCar != null)
+            if (result != null)
             {
-                return mostRentedCar;
+                return result;
             }
             else
             {
                 throw new ArgumentException("No car found in this peroid");
+            }
+        }
+
+        public IEnumerable<string> GetCustomersWithAutomaticTransmission()
+        {
+            var result = eventRepo.ReadAll()
+                            .Where(t => t.Car.IsAutomatic)
+                            .Select(t => t.CustomerName)
+                            .Distinct();
+
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
+                throw new ArgumentException("No customer found with automatic car");
             }
         }
 

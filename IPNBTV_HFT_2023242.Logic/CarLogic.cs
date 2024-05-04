@@ -10,11 +10,11 @@ namespace IPNBTV_HFT_2023242.Logic
 {
     public class CarLogic : ICarLogic
     {
-        IRepository<Car> repo;
+        IRepository<Car> carRepo;
 
-        public CarLogic(IRepository<Car> repo)
+        public CarLogic(IRepository<Car> carRepo)
         {
-            this.repo = repo;
+            this.carRepo = carRepo;
         }
 
         public void Create(Car item)
@@ -23,7 +23,7 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Invalid Id");
             }
-            repo.Create(item);
+            carRepo.Create(item);
         }
 
         public void Delete(int id)
@@ -32,12 +32,12 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Invalid Id");
             }
-            repo.Delete(id);
+            carRepo.Delete(id);
         }
 
         public Car Read(int id)
         {
-            var car = repo.Read(id);
+            var car = carRepo.Read(id);
             if (car == null)
             {
                 throw new ArgumentException("Car not exists");
@@ -47,11 +47,11 @@ namespace IPNBTV_HFT_2023242.Logic
 
         public IEnumerable<Car> ReadAll()
         {
-            if (repo.ReadAll() == null)
+            if (carRepo.ReadAll() == null)
             {
                 throw new ArgumentException("Empty database");
             }
-            return repo.ReadAll();
+            return carRepo.ReadAll();
         }
 
         public void Update(Car item)
@@ -60,7 +60,43 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Invalid Id");
             }
-            repo.Update(item);
+            carRepo.Update(item);
+        }
+
+        public IEnumerable<MostRentedCarInfo> GetMostRentedCarsInRentalShop(int rentalShopId)
+        {
+            if (rentalShopId > 0)
+            {
+                var result = carRepo.ReadAll()
+                                .Where(t => t.RentalShopId == rentalShopId)
+                                .GroupBy(t => t.Id)
+                                .OrderByDescending(g => carRepo.Read(g.Key).RentalEvents.Count())
+                                .Select(g => new MostRentedCarInfo
+                                {
+                                    Car = carRepo.Read(g.Key),
+                                    NumberOfRentalEvents = carRepo.Read(g.Key).RentalEvents.Count()
+                                })
+                                .Take(1);
+
+                if (result != null)
+                {
+                    return result;
+                }
+                else
+                {
+                    throw new ArgumentException("No car found in rentalshop");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("Ivalid rentalshopId");
+            }
+        }
+
+        public class MostRentedCarInfo
+        {
+            public Car Car { get; set; }
+            public int NumberOfRentalEvents { get; set; }
         }
     }
 }
