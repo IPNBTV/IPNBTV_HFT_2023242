@@ -18,10 +18,10 @@ namespace IPNBTV_HFT_2023242.Client
 
             IRentalEventLogic eventLogic = new RentalEventLogic(eventRepo, carRepo);
 
-            DateTime startDate = new DateTime(2020, 01, 01);
+            DateTime startDate = new DateTime(2020, 05, 05);
             DateTime endDate = DateTime.Now;
 
-            var mostRentedCar = eventLogic.GetMostRentedCar(startDate, endDate);
+            var mostRentedCar = eventLogic.OrderByMostRentals(startDate, endDate);
 
             ;
         }

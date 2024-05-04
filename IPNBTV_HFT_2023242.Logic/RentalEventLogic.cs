@@ -65,30 +65,21 @@ namespace IPNBTV_HFT_2023242.Logic
             eventRepo.Update(item);
         }
 
-        // The most rented car in a certain period
-        public MostRentedCarInfo GetMostRentedCar(DateTime startDate, DateTime endDate)
+        public IEnumerable<MostRentedCarInfo> OrderByMostRentals(DateTime startDate, DateTime endDate)
         {
             var mostRentedCar = eventRepo.ReadAll()
                               .Where(re => re.RentalDate >= startDate && re.RentalDate <= endDate)
                               .GroupBy(re => re.CarId)
                               .OrderByDescending(g => g.Count())
-                              .Select(g => new
+                              .Select(g => new MostRentedCarInfo
                               {
                                   Car = carRepo.Read(g.Key),
-                                  RentalDate = eventRepo.ReadAll().Where(t => t.CarId == g.Key).FirstOrDefault().RentalDate,
-                                  ReturnDate = eventRepo.ReadAll().Where(t => t.CarId == g.Key).FirstOrDefault().ReturnDate
-                              })
-                              .FirstOrDefault();
-
-            MostRentedCarInfo mostRentedCarInfo = new MostRentedCarInfo
-            {
-                Car = mostRentedCar.Car,
-                RentalTime = CalculateRentalTime(mostRentedCar.RentalDate, mostRentedCar.ReturnDate, startDate, endDate)
-            };
+                                  NumberOfRentalEvents = g.Count()
+                              });
 
             if (mostRentedCar != null)
             {
-                return mostRentedCarInfo;
+                return mostRentedCar;
             }
             else
             {
@@ -96,24 +87,10 @@ namespace IPNBTV_HFT_2023242.Logic
             }
         }
 
-        private TimeSpan CalculateRentalTime(DateTime rentalDate, DateTime returnDate, DateTime startDate, DateTime endDate)
-        {
-            TimeSpan totalRentalTime = TimeSpan.Zero;
-
-            var rentalStartDate = rentalDate > startDate ? rentalDate : startDate;
-            var rentalEndDate = returnDate < endDate ? returnDate : endDate;
-
-            totalRentalTime += rentalEndDate - rentalStartDate;
-
-            return totalRentalTime;
-        }
-
         public class MostRentedCarInfo
         {
             public Car Car { get; set; }
-            public TimeSpan RentalTime { get; set; }
+            public int NumberOfRentalEvents { get; set; }
         }
-
-
     }
 }
