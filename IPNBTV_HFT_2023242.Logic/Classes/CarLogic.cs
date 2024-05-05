@@ -21,7 +21,11 @@ namespace IPNBTV_HFT_2023242.Logic
 
         public void Create(Car item)
         {
-            if (item.Id < 1)
+            if (item.Year < 1886)
+            {
+                throw new ArgumentException("There are no cars before 1886");
+            }
+            else if (item.Id < 1)
             {
                 throw new ArgumentException("Invalid Id");
             }
