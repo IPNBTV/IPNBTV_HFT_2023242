@@ -622,7 +622,7 @@ namespace IPNBTV_HFT_2023242.Test
 
             mockEventRepo.Setup(t => t.Read(It.IsAny<int>())).Returns<int>(id =>
             {
-                return eventInputdata.FirstOrDefault(car => car.Id == id);
+                return eventInputdata.FirstOrDefault(ev => ev.Id == id);
             });
 
             carLogic = new CarLogic(mockCarRepo.Object, mockEventRepo.Object);
@@ -744,6 +744,12 @@ namespace IPNBTV_HFT_2023242.Test
             int expected = 0;
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetNumberOfRentalEventsForCarInShopTest4()
+        {
+            Assert.Throws<ArgumentException>(() => carLogic.GetNumberOfRentalEventsForCarInShop(0, 0));
         }
     }
 }

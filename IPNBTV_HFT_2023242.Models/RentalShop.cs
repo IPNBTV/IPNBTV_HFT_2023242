@@ -29,5 +29,28 @@ namespace IPNBTV_HFT_2023242.Models
 
         [NotMapped]
         public virtual ICollection<Car> Cars { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            RentalShop b = obj as RentalShop;
+            if (b == null)
+            {
+                return false;
+            }
+            else
+            {
+                return Id == b.Id
+                    && Name == b.Name
+                    && City == b.City
+                    && Address == b.Address
+                    && Phone == b.Phone
+                    && Cars == b.Cars;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name, City, Address, Phone, Cars);
+        }
     }
 }

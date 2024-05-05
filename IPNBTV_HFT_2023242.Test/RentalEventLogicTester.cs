@@ -620,7 +620,7 @@ namespace IPNBTV_HFT_2023242.Test
 
             mockEventRepo.Setup(t => t.Read(It.IsAny<int>())).Returns<int>(id =>
             {
-                return eventInputdata.FirstOrDefault(car => car.Id == id);
+                return eventInputdata.FirstOrDefault(ev => ev.Id == id);
             });
 
             eventLogic = new RentalEventLogic(mockEventRepo.Object, mockCarRepo.Object);
