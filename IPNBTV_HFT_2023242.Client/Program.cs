@@ -35,6 +35,19 @@ namespace IPNBTV_HFT_2023242.Client
 
             var rentalShopsWithCarColor = shopLogic.GetRentalShopsWithCarColor("silver");
 
+            var newEvent = new RentalEvent
+            {
+                Id = 13,
+                CarId = 4,
+                RentalDate = DateTime.Parse("2012. 05. 01. 10:00:00"),
+                ReturnDate = DateTime.Parse("2012. 12. 05. 15:00:00"),
+                CustomerName = "Dávid Máté"
+            };
+
+            eventRepo.Create(newEvent);
+
+            var e = eventRepo.Read(13);
+
             ;
         }
     }

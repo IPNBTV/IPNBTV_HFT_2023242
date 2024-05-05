@@ -23,6 +23,10 @@ namespace IPNBTV_HFT_2023242.Logic
         {
             if (item.CustomerName.Length < 3)
             {
+                throw new ArgumentException("Name is too short");
+            }
+            else if (item.Id < 1)
+            {
                 throw new ArgumentException("Invalid Id");
             }
             eventRepo.Create(item);
