@@ -715,5 +715,35 @@ namespace IPNBTV_HFT_2023242.Test
 
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        public void GetNumberOfRentalEventsForCarInShopTest1()
+        {
+            int actual = carLogic.GetNumberOfRentalEventsForCarInShop(1, 1);
+
+            int expected = 2;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetNumberOfRentalEventsForCarInShopTest2()
+        {
+            int actual = carLogic.GetNumberOfRentalEventsForCarInShop(7, 3);
+
+            int expected = 3;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetNumberOfRentalEventsForCarInShopTest3()
+        {
+            int actual = carLogic.GetNumberOfRentalEventsForCarInShop(4, 1);
+
+            int expected = 0;
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

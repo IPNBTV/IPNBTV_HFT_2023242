@@ -31,7 +31,7 @@ namespace IPNBTV_HFT_2023242.Client
 
             var mostRentedCarInRentalShop = carLogic.GetMostRentedCarsInRentalShop(1);
 
-            var numberOfRentalEventsForCarInRentalShop = carLogic.GetNumberOfRentalEventsForCarInShop(4, 1);
+            var numberOfRentalEventsForCarInRentalShop = carLogic.GetNumberOfRentalEventsForCarInShop(1, 1);
 
             var rentalShopsWithCarColor = shopLogic.GetRentalShopsWithCarColor("silver");
 
