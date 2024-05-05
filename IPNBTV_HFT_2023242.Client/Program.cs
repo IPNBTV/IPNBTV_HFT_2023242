@@ -23,9 +23,9 @@ namespace IPNBTV_HFT_2023242.Client
             IRentalShopLogic shopLogic = new RentalShopLogic(shopRepo, carRepo);
 
             DateTime startDate = new DateTime(2020, 05, 05);
-            DateTime endDate = DateTime.Now;
+            DateTime endDate = new DateTime(2024, 01, 01);
 
-            var mostRentedCar = eventLogic.OrderByMostRentals(startDate, endDate);
+            var mostRentedCar = eventLogic.OrderByMostRentals(startDate, endDate).ToList();
 
             var customerWithAutomatic = eventLogic.GetCustomersWithAutomaticTransmission();
 
@@ -35,18 +35,6 @@ namespace IPNBTV_HFT_2023242.Client
 
             var rentalShopsWithCarColor = shopLogic.GetRentalShopsWithCarColor("silver");
 
-            var newEvent = new RentalEvent
-            {
-                Id = 13,
-                CarId = 4,
-                RentalDate = DateTime.Parse("2012. 05. 01. 10:00:00"),
-                ReturnDate = DateTime.Parse("2012. 12. 05. 15:00:00"),
-                CustomerName = "Dávid Máté"
-            };
-
-            eventRepo.Create(newEvent);
-
-            var e = eventRepo.Read(13);
 
             ;
         }
