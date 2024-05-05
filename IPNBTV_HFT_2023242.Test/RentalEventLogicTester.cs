@@ -501,6 +501,21 @@ namespace IPNBTV_HFT_2023242.Test
             Assert.AreEqual(expected, actual);
         }
 
+        [Test]
+        public void GetCustomersWithAutomaticTransmissionTest()
+        {
+            var actual = eventLogic.GetCustomersWithAutomaticTransmission().ToList();
 
+            var expected = new List<string>()
+            {
+                "Kovács Péter",
+                "Nagy Márta",
+                "Varga Éva",
+                "Papp János",
+                "Fekete Péter"
+            };
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
