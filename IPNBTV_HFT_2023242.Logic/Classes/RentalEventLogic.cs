@@ -81,7 +81,9 @@ namespace IPNBTV_HFT_2023242.Logic
                                   NumberOfRentalEvents = g.Count()
                               });
 
-            if (result != null)
+            var s = result.ToArray();
+
+            if (s.Length != 0)
             {
                 return result;
             }
@@ -99,7 +101,9 @@ namespace IPNBTV_HFT_2023242.Logic
                             .Select(t => t.CustomerName)
                             .Distinct();
 
-            if (result != null)
+            var s = result.ToArray();
+
+            if (s.Length != 0)
             {
                 return result;
             }
