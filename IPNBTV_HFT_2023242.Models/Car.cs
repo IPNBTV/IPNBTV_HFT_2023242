@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace IPNBTV_HFT_2023242.Models
@@ -33,6 +34,7 @@ namespace IPNBTV_HFT_2023242.Models
         public virtual RentalShop RentalShop { get; set; }
 
         [NotMapped]
+        [JsonIgnore]
         public virtual ICollection<RentalEvent> RentalEvents { get; set; }
     }
 }
