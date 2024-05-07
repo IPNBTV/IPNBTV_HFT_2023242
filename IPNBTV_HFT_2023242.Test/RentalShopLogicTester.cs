@@ -474,24 +474,6 @@ namespace IPNBTV_HFT_2023242.Test
         }
 
         [Test]
-        public void ShopCreateTest3()
-        {
-            //ARRANGE
-            var newShop = new RentalShop
-            {
-                Id = 0,
-                Name = "Zöld Autókölcsönző",
-                City = "Napfényfalva",
-                Address = "Öko út 22.",
-                Phone = "+36 50 234 5678"
-            };
-
-            //ACT
-            //ASSERT
-            Assert.Throws<ArgumentException>(() => shopLogic.Create(newShop));
-        }
-
-        [Test]
         public void GetRentalShopsWithCarColorTest()
         {
             var actual = shopLogic.GetRentalShopsWithCarColor("silver").ToList();

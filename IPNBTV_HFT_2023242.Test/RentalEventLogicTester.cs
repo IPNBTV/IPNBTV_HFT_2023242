@@ -666,24 +666,6 @@ namespace IPNBTV_HFT_2023242.Test
         }
 
         [Test]
-        public void RentalEventCreateTest3()
-        {
-            //ARRANGE
-            var newEvent = new RentalEvent
-            {
-                Id = 0,
-                CarId = 4,
-                RentalDate = DateTime.Parse("2012. 05. 01. 10:00:00"),
-                ReturnDate = DateTime.Parse("2012. 12. 05. 15:00:00"),
-                CustomerName = "Dávid Máté"
-            };
-
-            //ACT
-            //ASSERT
-            Assert.Throws<ArgumentException>(() => eventLogic.Create(newEvent));
-        }
-
-        [Test]
         public void OrderByMostRentalsTest1()
         {
             var actual = eventLogic.OrderByMostRentals(new DateTime(2020, 05, 05), new DateTime(2024, 01, 01))

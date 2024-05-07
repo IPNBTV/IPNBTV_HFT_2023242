@@ -671,26 +671,6 @@ namespace IPNBTV_HFT_2023242.Test
         }
 
         [Test]
-        public void CarCreateTest3()
-        {
-            //ARRANGE
-            var newCar = new Car
-            {
-                Id = 0,
-                Brand = "Subaru",
-                Model = "Impreza",
-                Year = 2004,
-                Color = "blue",
-                IsAutomatic = false,
-                RentalShopId = 2
-            };
-
-            //ACT;
-            //ASSERT
-            Assert.Throws<ArgumentException>(() => carLogic.Create(newCar));
-        }
-
-        [Test]
         public void GetMostRentedCarsInRentalShopTest()
         {
             var actual = carLogic.GetMostRentedCarsInRentalShop(1).ToList();

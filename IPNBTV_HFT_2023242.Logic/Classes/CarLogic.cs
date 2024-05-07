@@ -25,10 +25,6 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("There are no cars before 1886");
             }
-            else if (item.Id < 1)
-            {
-                throw new ArgumentException("Invalid Id");
-            }
             carRepo.Create(item);
         }
 

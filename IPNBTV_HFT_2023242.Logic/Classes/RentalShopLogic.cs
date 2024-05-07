@@ -24,10 +24,6 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("Name is too short");
             }
-            else if (item.Id < 1)
-            {
-                throw new ArgumentException("Invalid Id");
-            }
             shopRepo.Create(item);
         }
 
