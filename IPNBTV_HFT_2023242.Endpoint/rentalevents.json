@@ -1,0 +1,86 @@
+[
+  {
+    "Id": 1,
+    "CarId": 1,
+    "RentalDate": "2022. 05. 01. 10:00:00",
+    "ReturnDate": "2022. 05. 05. 15:00:00",
+    "CustomerName": "Kovács Péter"
+  },
+  {
+    "Id": 2,
+    "CarId": 1,
+    "RentalDate": "2022. 05. 10. 08:30:00",
+    "ReturnDate": "2022. 05. 15. 12:30:00",
+    "CustomerName": "Nagy Márta"
+  },
+  {
+    "Id": 3,
+    "CarId": 2,
+    "RentalDate": "2022. 05. 03. 14:45:00",
+    "ReturnDate": "2022. 05. 08. 17:45:00",
+    "CustomerName": "Szabó Gábor"
+  },
+  {
+    "Id": 4,
+    "CarId": 2,
+    "RentalDate": "2023. 05. 12. 09:15:00",
+    "ReturnDate": "2023. 05. 18. 14:15:00",
+    "CustomerName": "Tóth Anna"
+  },
+  {
+    "Id": 5,
+    "CarId": 2,
+    "RentalDate": "2023. 05. 22. 13:30:00",
+    "ReturnDate": "2023. 05. 26. 18:30:00",
+    "CustomerName": "Kiss István"
+  },
+  {
+    "Id": 6,
+    "CarId": 3,
+    "RentalDate": "2023. 05. 05. 11:15:00",
+    "ReturnDate": "2023. 05. 09. 10:15:00",
+    "CustomerName": "Varga Éva"
+  },
+  {
+    "Id": 7,
+    "CarId": 4,
+    "RentalDate": "2023. 05. 06. 08:30:00",
+    "ReturnDate": "2023. 05. 10. 18:45:00",
+    "CustomerName": "Papp János"
+  },
+  {
+    "Id": 8,
+    "CarId": 5,
+    "RentalDate": "2023. 05. 07. 13:40:00",
+    "ReturnDate": "2023. 05. 12. 11:30:00",
+    "CustomerName": "Molnár Orsolya"
+  },
+  {
+    "Id": 9,
+    "CarId": 6,
+    "RentalDate": "2023. 05. 08. 10:45:00",
+    "ReturnDate": "2023. 05. 13. 14:20:00",
+    "CustomerName": "Fekete Péter"
+  },
+  {
+    "Id": 10,
+    "CarId": 7,
+    "RentalDate": "2023. 05. 09. 12:30:00",
+    "ReturnDate": "2023. 05. 15. 16:40:00",
+    "CustomerName": "Balogh Zsuzsanna"
+  },
+  {
+    "Id": 11,
+    "CarId": 7,
+    "RentalDate": "2023. 05. 17. 08:50:00",
+    "ReturnDate": "2023. 05. 23. 16:20:00",
+    "CustomerName": "Horváth István"
+  },
+  {
+    "Id": 12,
+    "CarId": 7,
+    "RentalDate": "2023. 05. 25. 13:20:00",
+    "ReturnDate": "2023. 05. 31. 11:15:00",
+    "CustomerName": "Németh Ágnes"
+  }
+]

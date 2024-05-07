@@ -1,0 +1,23 @@
+﻿[
+  {
+    "Id": 1,
+    "Name": "AutóExpressz Kölcsönző",
+    "City": "Budapest",
+    "Address": "Kossuth Lajos utca 12.",
+    "Phone": "+36 20 234 5678"
+  },
+  {
+    "Id": 2,
+    "Name": "CityRent Autókölcsönző",
+    "City": "Debrecen",
+    "Address": "Piac utca 5.",
+    "Phone": "+36 30 345 6789"
+  },
+  {
+    "Id": 3,
+    "Name": "PremiumAutó Kölcsönző",
+    "City": "Szeged",
+    "Address": "Dugonics tér 8.",
+    "Phone": "+36 70 456 7890"
+  }
+]

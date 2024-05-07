@@ -5,9 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\IPNBTV_HFT_2023242.Logic\IPNBTV_HFT_2023242.Logic.csproj" />
     <ProjectReference Include="..\IPNBTV_HFT_2023242.Models\IPNBTV_HFT_2023242.Models.csproj" />
     <ProjectReference Include="..\IPNBTV_HFT_2023242.Repository\IPNBTV_HFT_2023242.Repository.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

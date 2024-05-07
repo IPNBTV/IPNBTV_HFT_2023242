@@ -1,0 +1,65 @@
+[
+  {
+    "Id": 1,
+    "Brand": "Toyota",
+    "Model": "Corolla",
+    "Year": 2022,
+    "Color": "white",
+    "IsAutomatic": true,
+    "RentalShopId": 1
+  },
+  {
+    "Id": 2,
+    "Brand": "Volkswagen",
+    "Model": "Golf",
+    "Year": 2021,
+    "Color": "blue",
+    "IsAutomatic": false,
+    "RentalShopId": 1
+  },
+  {
+    "Id": 3,
+    "Brand": "Ford",
+    "Model": "Focus",
+    "Year": 2020,
+    "Color": "silver",
+    "IsAutomatic": true,
+    "RentalShopId": 1
+  },
+  {
+    "Id": 4,
+    "Brand": "BMW",
+    "Model": "320i",
+    "Year": 2023,
+    "Color": "black",
+    "IsAutomatic": true,
+    "RentalShopId": 2
+  },
+  {
+    "Id": 5,
+    "Brand": "Audi",
+    "Model": "A4",
+    "Year": 2022,
+    "Color": "red",
+    "IsAutomatic": false,
+    "RentalShopId": 2
+  },
+  {
+    "Id": 6,
+    "Brand": "Mercedes-Benz",
+    "Model": "C osztály",
+    "Year": 2021,
+    "Color": "silver",
+    "IsAutomatic": true,
+    "RentalShopId": 3
+  },
+  {
+    "Id": 7,
+    "Brand": "Renault",
+    "Model": "Megane",
+    "Year": 2020,
+    "Color": "white",
+    "IsAutomatic": false,
+    "RentalShopId": 3
+  }
+]
