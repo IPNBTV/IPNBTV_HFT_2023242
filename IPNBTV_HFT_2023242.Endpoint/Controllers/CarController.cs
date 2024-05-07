@@ -39,7 +39,7 @@ namespace IPNBTV_HFT_2023242.Endpoint.Controllers
 
 
         [HttpPut]
-        public void Put([FromBody] Car value)
+        public void Update([FromBody] Car value)
         {
             logic.Update(value);
         }
