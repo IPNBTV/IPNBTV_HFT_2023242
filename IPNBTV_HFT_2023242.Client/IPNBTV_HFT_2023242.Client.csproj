@@ -6,7 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IPNBTV_HFT_2023242.Logic\IPNBTV_HFT_2023242.Logic.csproj" />
+    <PackageReference Include="ConsoleMenu-simple" Version="2.7.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\IPNBTV_HFT_2023242.Models\IPNBTV_HFT_2023242.Models.csproj" />
   </ItemGroup>
 
