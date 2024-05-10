@@ -21,13 +21,13 @@ namespace IPNBTV_HFT_2023242.Repository
         public override void Update(RentalShop item)
         {
             var old = Read(item.Id);
-
-            old.Id = item.Id;
-            old.Name = item.Name;
-            old.City = item.City;
-            old.Address = item.Address;
-            old.Phone = item.Phone;
-
+            foreach (var prop in old.GetType().GetProperties())
+            {
+                if (prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
+                {
+                    prop.SetValue(old, prop.GetValue(item));
+                }
+            }
             ctx.SaveChanges();
         }
     }
