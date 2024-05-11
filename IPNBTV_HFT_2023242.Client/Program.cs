@@ -239,6 +239,35 @@ namespace IPNBTV_HFT_2023242.Client
             }
         }
 
+        static void GetMostRentedCarInRentalShop()
+        {
+            Console.Write("Enter RentalShop's id: ");
+            int id = int.Parse(Console.ReadLine());
+
+            MostRentedCarInfo result = rest.Get<IEnumerable<MostRentedCarInfo>>(id, "noncrudcar/getmostrentedcarinrentalshop").ToList().FirstOrDefault();
+
+            Console.WriteLine($"\nMost rented car in rentalshop[{id}]:" +
+                              $"\nId: {result.Car.Id}" +
+                              $"\nBrand: {result.Car.Brand}" +
+                              $"\nModel: {result.Car.Model}" +
+                              $"\nYear: {result.Car.Year}" +
+                              $"\nColor: {result.Car.Color}" +
+                              $"\nIsAutomatic: {result.Car.IsAutomatic}" +
+                              $"\n\nNumber of rental events: {result.NumberOfRentalEvents}");
+            Console.ReadLine();
+        }
+
+        static void GetNumberOfRentalEventsForCarInShop()
+        {
+            Console.Write("Enter Car's id: ");
+            int carId = int.Parse(Console.ReadLine());
+            Console.Write("Enter RentalShop's id: ");
+            int rentalShopId = int.Parse(Console.ReadLine());
+            Console.WriteLine($"\nNumber of rentalevents for car[{carId}] in shop[{rentalShopId}]:" +
+                $" {rest.GetSingle<int>(carId, rentalShopId, "noncrudcar/getnumberofrentaleventsforcarinshop")}");
+            Console.ReadLine();
+        }
+
         static void Main(string[] args)
         {
             rest = new RestService("http://localhost:34728/", "swagger");
@@ -255,6 +284,8 @@ namespace IPNBTV_HFT_2023242.Client
                 .Add("Create", () => Create("Car"))
                 .Add("Delete", () => Delete("Car"))
                 .Add("Update", () => Update("Car"))
+                .Add("GetMostRentedCarsInRentalShop", () => GetMostRentedCarInRentalShop())
+                .Add("GetNumberOfRentalEventsForCarInShop", ()=> GetNumberOfRentalEventsForCarInShop())
                 .Add("Exit", ConsoleMenu.Close);
 
             var rentaleventSubMenu = new ConsoleMenu(args, level: 1)
@@ -271,6 +302,37 @@ namespace IPNBTV_HFT_2023242.Client
                 .Add("Exit", ConsoleMenu.Close);
 
             menu.Show();
+        }
+    }
+
+    public class MostRentedCarInfo
+    {
+        public Car Car { get; set; }
+        public int NumberOfRentalEvents { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            MostRentedCarInfo b = obj as MostRentedCarInfo;
+            if (b == null)
+            {
+                return false;
+            }
+            else
+            {
+                return Car.Id == b.Car.Id
+                    && Car.Brand == b.Car.Brand
+                    && Car.Model == b.Car.Model
+                    && Car.Year == b.Car.Year
+                    && Car.Color == b.Car.Color
+                    && Car.IsAutomatic == b.Car.IsAutomatic
+                    && Car.RentalShopId == b.Car.RentalShopId
+                    && NumberOfRentalEvents == b.NumberOfRentalEvents;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Car, NumberOfRentalEvents);
         }
     }
 }

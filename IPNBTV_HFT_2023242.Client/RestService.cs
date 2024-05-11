@@ -87,6 +87,22 @@ namespace IPNBTV_HFT_2023242.Client
             return item;
         }
 
+        public T GetSingle<T>(int id1, int id2, string endpoint)
+        {
+            T item = default(T);
+            HttpResponseMessage response = client.GetAsync(endpoint + "/" + id1.ToString() + "/" + id2.ToString()).GetAwaiter().GetResult();
+            if (response.IsSuccessStatusCode)
+            {
+                item = response.Content.ReadAsAsync<T>().GetAwaiter().GetResult();
+            }
+            else
+            {
+                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
+                throw new ArgumentException(error.Msg);
+            }
+            return item;
+        }
+
         public T Get<T>(int id, string endpoint)
         {
             T item = default(T);

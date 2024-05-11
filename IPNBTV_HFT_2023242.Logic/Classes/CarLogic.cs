@@ -65,7 +65,7 @@ namespace IPNBTV_HFT_2023242.Logic
             carRepo.Update(item);
         }
 
-        public IEnumerable<MostRentedCarInfo> GetMostRentedCarsInRentalShop(int rentalShopId)
+        public IEnumerable<MostRentedCarInfo> GetMostRentedCarInRentalShop(int rentalShopId)
         {
             if (rentalShopId > 0)
             {

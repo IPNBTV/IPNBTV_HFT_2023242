@@ -86,7 +86,6 @@ namespace IPNBTV_HFT_2023242.Logic
             {
                 throw new ArgumentException("No rental shop found with this color car");
             }
-
         }
     }
 }
