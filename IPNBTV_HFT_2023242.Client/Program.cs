@@ -244,7 +244,7 @@ namespace IPNBTV_HFT_2023242.Client
             Console.Write("Enter RentalShop's id: ");
             int id = int.Parse(Console.ReadLine());
 
-            MostRentedCarInfo result = rest.Get<IEnumerable<MostRentedCarInfo>>(id, "noncrudcar/getmostrentedcarinrentalshop").ToList().FirstOrDefault();
+            MostRentedCarInfo result = rest.Get<IEnumerable<MostRentedCarInfo>>(id, "noncrud/getmostrentedcarinrentalshop").ToList().FirstOrDefault();
 
             Console.WriteLine($"\nMost rented car in rentalshop[{id}]:" +
                               $"\nId: {result.Car.Id}" +
@@ -254,6 +254,7 @@ namespace IPNBTV_HFT_2023242.Client
                               $"\nColor: {result.Car.Color}" +
                               $"\nIsAutomatic: {result.Car.IsAutomatic}" +
                               $"\n\nNumber of rental events: {result.NumberOfRentalEvents}");
+
             Console.ReadLine();
         }
 
@@ -263,8 +264,35 @@ namespace IPNBTV_HFT_2023242.Client
             int carId = int.Parse(Console.ReadLine());
             Console.Write("Enter RentalShop's id: ");
             int rentalShopId = int.Parse(Console.ReadLine());
+
             Console.WriteLine($"\nNumber of rentalevents for car[{carId}] in shop[{rentalShopId}]:" +
-                $" {rest.GetSingle<int>(carId, rentalShopId, "noncrudcar/getnumberofrentaleventsforcarinshop")}");
+                $" {rest.GetSingle<int>(carId, rentalShopId, "noncrud/getnumberofrentaleventsforcarinshop")}");
+
+            Console.ReadLine();
+        }
+
+        static void OrderByMostRentals()
+        {
+            Console.Write("Enter start date [yyyy. mm. dd.]: ");
+            DateTime startDate = DateTime.Parse(Console.ReadLine());
+            Console.Write("Enter end date [yyyy. mm. dd.]: ");
+            DateTime endDate = DateTime.Parse(Console.ReadLine());
+
+            List<MostRentedCarInfo> result = rest.Get<IEnumerable<MostRentedCarInfo>>(startDate, endDate, "noncrud/orderbymostrentals").ToList();
+            int counter = 1;
+            foreach (var item in result)
+            {
+                Console.WriteLine($"\n\n{counter}. most rented car in period [{startDate} - {endDate}]" +
+                                  $"\nId: {item.Car.Id}" +
+                                  $"\nBrand: {item.Car.Brand}" +
+                                  $"\nModel: {item.Car.Model}" +
+                                  $"\nYear: {item.Car.Year}" +
+                                  $"\nColor: {item.Car.Color}" +
+                                  $"\nIsAutomatic: {item.Car.IsAutomatic}" +
+                                  $"\n\nNumber of rental events: {item.NumberOfRentalEvents}");
+                counter++;
+            }
+
             Console.ReadLine();
         }
 
@@ -293,6 +321,7 @@ namespace IPNBTV_HFT_2023242.Client
                 .Add("Create", () => Create("RentalEvent"))
                 .Add("Delete", () => Delete("RentalEvent"))
                 .Add("Update", () => Update("RentalEvent"))
+                .Add("OrderByMostRentals", () => OrderByMostRentals())
                 .Add("Exit", ConsoleMenu.Close);
 
             var menu = new ConsoleMenu(args, level: 0)

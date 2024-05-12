@@ -11,7 +11,7 @@ namespace IPNBTV_HFT_2023242.Logic
         RentalEvent Read(int id);
         IEnumerable<RentalEvent> ReadAll();
         void Update(RentalEvent item);
-        IEnumerable<RentalEventLogic.MostRentedCarInfo> OrderByMostRentals(DateTime startDate, DateTime endDate);
+        IEnumerable<MostRentedCarInfo> OrderByMostRentals(DateTime startDate, DateTime endDate);
         IEnumerable<string> GetCustomersWithAutomaticTransmission();
     }
 }
