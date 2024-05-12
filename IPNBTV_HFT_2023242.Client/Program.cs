@@ -3,6 +3,7 @@ using IPNBTV_HFT_2023242.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 
@@ -296,6 +297,37 @@ namespace IPNBTV_HFT_2023242.Client
             Console.ReadLine();
         }
 
+        static void GetCustomersWithAutomaticTransmission()
+        {
+            List<string> result = rest.GetSingle<IEnumerable<string>>("noncrud/getcustomerswithautomatictransmission").ToList();
+
+            Console.WriteLine("Customers with automatic cars: \n");
+
+            result.ForEach(x => Console.WriteLine(x));
+
+            Console.ReadLine();
+        }
+
+        static void GetRentalShopsWithCarColor()
+        {
+            Console.Write("Enter car color: ");
+            string color = Console.ReadLine();
+
+            List<RentalShop> result = rest.Get<IEnumerable<RentalShop>>(color, "noncrud/getrentalshopswithcarcolor").ToList();
+
+            Console.WriteLine($"\nRentalshops with {color} car:\n");
+            foreach (var item in result)
+            {
+                Console.WriteLine($"Id: {item.Id}\n" +
+                                  $"Name: {item.Name}\n" +
+                                  $"City: {item.City}\n" +
+                                  $"Address: {item.Address}\n" +
+                                  $"Phone: {item.Phone}\n\n");
+            }
+
+            Console.ReadLine();
+        }
+
         static void Main(string[] args)
         {
             rest = new RestService("http://localhost:34728/", "swagger");
@@ -305,6 +337,7 @@ namespace IPNBTV_HFT_2023242.Client
                 .Add("Create", () => Create("RentalShop"))
                 .Add("Delete", () => Delete("RentalShop"))
                 .Add("Update", () => Update("RentalShop"))
+                .Add("GetRentalShopsWithCarColor", () => GetRentalShopsWithCarColor())
                 .Add("Exit", ConsoleMenu.Close);
 
             var carSubMenu = new ConsoleMenu(args, level: 1)
@@ -322,6 +355,7 @@ namespace IPNBTV_HFT_2023242.Client
                 .Add("Delete", () => Delete("RentalEvent"))
                 .Add("Update", () => Update("RentalEvent"))
                 .Add("OrderByMostRentals", () => OrderByMostRentals())
+                .Add("GetCustomersWithAutomaticTransmission", () => GetCustomersWithAutomaticTransmission())
                 .Add("Exit", ConsoleMenu.Close);
 
             var menu = new ConsoleMenu(args, level: 0)
