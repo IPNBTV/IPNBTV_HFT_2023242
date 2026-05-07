@@ -1,0 +1,106 @@
+﻿<Window x:Class="IPNBTV_HFT_2023242.WpfClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vms="clr-namespace:IPNBTV_HFT_2023242.WpfClient.ViewModels"
+        Title="Car Rental Manager" Height="550" Width="950" WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vms:MainWindowViewModel />
+    </Window.DataContext>
+
+    <TabControl Margin="10">
+
+        <TabItem Header="🚗 Cars" FontSize="16">
+            <Grid Background="#F5F5F5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <DataGrid Grid.Column="0" ItemsSource="{Binding Cars}" SelectedItem="{Binding SelectedCar}" AutoGenerateColumns="True" IsReadOnly="True" Margin="15" SelectionMode="Single" Background="White"/>
+                <StackPanel Grid.Column="1" Margin="10,15,15,15">
+                    <Button Content="➕ Add Car" Command="{Binding CreateCarCommand}" Margin="0,0,0,10" Padding="10" Background="#FF4CAF50" Foreground="White"/>
+                    <Button Content="✏️ Edit Car" Command="{Binding UpdateCarCommand}" Margin="0,0,0,10" Padding="10" Background="#FF2196F3" Foreground="White"/>
+                    <Button Content="🗑️ Delete Car" Command="{Binding DeleteCarCommand}" Padding="10" Background="#FFF44336" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="🏢 Rental Shops" FontSize="16">
+            <Grid Background="#F5F5F5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <DataGrid Grid.Column="0" ItemsSource="{Binding RentalShops}" SelectedItem="{Binding SelectedShop}" AutoGenerateColumns="True" IsReadOnly="True" Margin="15" SelectionMode="Single" Background="White"/>
+                <StackPanel Grid.Column="1" Margin="10,15,15,15">
+                    <Button Content="➕ Add Shop" Command="{Binding CreateShopCommand}" Margin="0,0,0,10" Padding="10" Background="#FF4CAF50" Foreground="White"/>
+                    <Button Content="✏️ Edit Shop" Command="{Binding UpdateShopCommand}" Margin="0,0,0,10" Padding="10" Background="#FF2196F3" Foreground="White"/>
+                    <Button Content="🗑️ Delete Shop" Command="{Binding DeleteShopCommand}" Padding="10" Background="#FFF44336" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="📅 Rental Events" FontSize="16">
+            <Grid Background="#F5F5F5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <DataGrid Grid.Column="0" ItemsSource="{Binding RentalEvents}" SelectedItem="{Binding SelectedEvent}" AutoGenerateColumns="True" IsReadOnly="True" Margin="15" SelectionMode="Single" Background="White"/>
+                <StackPanel Grid.Column="1" Margin="10,15,15,15">
+                    <Button Content="➕ Add Event" Command="{Binding CreateEventCommand}" Margin="0,0,0,10" Padding="10" Background="#FF4CAF50" Foreground="White"/>
+                    <Button Content="✏️ Edit Event" Command="{Binding UpdateEventCommand}" Margin="0,0,0,10" Padding="10" Background="#FF2196F3" Foreground="White"/>
+                    <Button Content="🗑️ Delete Event" Command="{Binding DeleteEventCommand}" Padding="10" Background="#FFF44336" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="📊 Statistics &amp; Queries" FontSize="16">
+            <Grid Background="#F5F5F5">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="20">
+                    <StackPanel MaxWidth="500" HorizontalAlignment="Left">
+
+                        <Button Content="1. Get Customers with Automatic Transmission" Command="{Binding GetCustomersWithAutomaticTransmissionCommand}" Padding="10" Margin="0,0,0,20" Background="#FF9C27B0" Foreground="White"/>
+
+                        <GroupBox Header="2. Most Rented Car in Shop" Padding="10" Margin="0,0,0,20">
+                            <StackPanel>
+                                <Label Content="Shop ID:"/>
+                                <TextBox Text="{Binding SearchShopId}" Margin="0,0,0,10"/>
+                                <Button Content="Run Query" Command="{Binding GetMostRentedCarInRentalShopCommand}" Padding="5" Background="#FF009688" Foreground="White"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="3. Event count for Car in Shop" Padding="10" Margin="0,0,0,20">
+                            <StackPanel>
+                                <Label Content="Car ID:"/>
+                                <TextBox Text="{Binding SearchCarId}" Margin="0,0,0,5"/>
+                                <Label Content="Shop ID:"/>
+                                <TextBox Text="{Binding SearchShopId}" Margin="0,0,0,10"/>
+                                <Button Content="Run Query" Command="{Binding GetNumberOfRentalEventsForCarInShopCommand}" Padding="5" Background="#FF009688" Foreground="White"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="4. Order By Most Rentals" Padding="10" Margin="0,0,0,20">
+                            <StackPanel>
+                                <Label Content="Start Date (yyyy-MM-dd):"/>
+                                <TextBox Text="{Binding SearchStartDate, StringFormat=yyyy-MM-dd}" Margin="0,0,0,5"/>
+                                <Label Content="End Date (yyyy-MM-dd):"/>
+                                <TextBox Text="{Binding SearchEndDate, StringFormat=yyyy-MM-dd}" Margin="0,0,0,10"/>
+                                <Button Content="Run Query" Command="{Binding OrderByMostRentalsCommand}" Padding="5" Background="#FF009688" Foreground="White"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="5. Rental Shops with Car Color" Padding="10" Margin="0,0,0,20">
+                            <StackPanel>
+                                <Label Content="Color:"/>
+                                <TextBox Text="{Binding SearchColor}" Margin="0,0,0,10"/>
+                                <Button Content="Run Query" Command="{Binding GetRentalShopsWithCarColorCommand}" Padding="5" Background="#FF009688" Foreground="White"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>

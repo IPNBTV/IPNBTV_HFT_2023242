@@ -36,5 +36,10 @@ namespace IPNBTV_HFT_2023242.Models
         [NotMapped]
         [JsonIgnore]
         public virtual ICollection<RentalEvent> RentalEvents { get; set; }
+
+        public override string ToString()
+        {
+            return $"{this.Brand} {this.Model}";
+        }
     }
 }

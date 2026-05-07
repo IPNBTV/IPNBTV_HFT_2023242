@@ -1,0 +1,25 @@
+﻿<Window x:Class="IPNBTV_HFT_2023242.WpfClient.CarEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Car Editor" Height="380" Width="300" WindowStartupLocation="CenterScreen">
+    <StackPanel Margin="15">
+        <Label Content="Brand" FontWeight="Bold"/>
+        <TextBox Text="{Binding Brand}" Margin="0,0,0,5"/>
+
+        <Label Content="Model" FontWeight="Bold"/>
+        <TextBox Text="{Binding Model}" Margin="0,0,0,5"/>
+
+        <Label Content="Year" FontWeight="Bold"/>
+        <TextBox Text="{Binding Year}" Margin="0,0,0,5"/>
+
+        <Label Content="Color" FontWeight="Bold"/>
+        <TextBox Text="{Binding Color}" Margin="0,0,0,5"/>
+
+        <CheckBox Content="Is Automatic" IsChecked="{Binding IsAutomatic}" Margin="0,10,0,10" FontWeight="Bold"/>
+
+        <Label Content="Rental Shop ID" FontWeight="Bold"/>
+        <TextBox Text="{Binding RentalShopId}" Margin="0,0,0,15"/>
+
+        <Button Content="Save" FontSize="16" Padding="5" Click="SaveButton_Click" Background="#FF4CAF50" Foreground="White"/>
+    </StackPanel>
+</Window>

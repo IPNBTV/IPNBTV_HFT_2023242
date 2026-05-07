@@ -54,5 +54,10 @@ namespace IPNBTV_HFT_2023242.Models
         {
             return HashCode.Combine(Id, Name, City, Address, Phone, Cars);
         }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

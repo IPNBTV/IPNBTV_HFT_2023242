@@ -671,9 +671,9 @@ namespace IPNBTV_HFT_2023242.Test
         }
 
         [Test]
-        public void GetMostRentedCarsInRentalShopTest()
+        public void GetMostRentedCarInRentalShopTest()
         {
-            var actual = carLogic.GetMostRentedCarsInRentalShop(1).ToList();
+            var actual = carLogic.GetMostRentedCarInRentalShop(1).ToList();
 
             var expected = new List<MostRentedCarInfo>
             {
