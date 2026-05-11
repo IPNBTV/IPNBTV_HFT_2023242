@@ -1,7 +1,7 @@
 ﻿<Window x:Class="IPNBTV_HFT_2023242.WpfClient.ShopEditorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Shop Editor" Height="350" Width="300" WindowStartupLocation="CenterScreen">
+        Title="Shop Editor" Height="310" Width="300" WindowStartupLocation="CenterScreen">
     <StackPanel Margin="15">
         <Label Content="Name" FontWeight="Bold"/>
         <TextBox Text="{Binding Name}" Margin="0,0,0,5"/>

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -29,6 +30,7 @@ namespace IPNBTV_HFT_2023242.WpfClient.ViewModels
         [ObservableProperty] private string searchColor = "white";
         [ObservableProperty] private DateTime searchStartDate = new DateTime(2022, 1, 1);
         [ObservableProperty] private DateTime searchEndDate = new DateTime(2024, 1, 1);
+        [ObservableProperty] private string queryResult = "Run a query to see the results here...";
 
         public MainWindowViewModel(IEditorService editorService)
         {
@@ -37,6 +39,7 @@ namespace IPNBTV_HFT_2023242.WpfClient.ViewModels
             if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
                 rest = new RestService("http://localhost:34728/");
+                RestoreBaseImages();
                 RefreshAll();
             }
         }
@@ -57,7 +60,23 @@ namespace IPNBTV_HFT_2023242.WpfClient.ViewModels
         public void CreateCar()
         {
             var newItem = new Car();
-            if (editorService.EditCar(newItem)) { rest.Post(newItem, "car"); RefreshAll(); }
+            if (editorService.EditCar(newItem))
+            {
+                rest.Post(newItem, "car");
+                RefreshAll();
+
+                string tempPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "temp.jpg");
+                if (File.Exists(tempPath))
+                {
+                    int newId = Cars.Count > 0 ? Cars.Max(x => x.Id) : 1;
+                    string finalPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", $"{newId}.jpg");
+
+                    File.Copy(tempPath, finalPath, overwrite: true);
+                    File.Delete(tempPath);
+
+                    SelectedCar = Cars.FirstOrDefault(c => c.Id == newId);
+                }
+            }
         }
 
         [RelayCommand(CanExecute = nameof(CanExecuteCarAction))]
@@ -68,7 +87,19 @@ namespace IPNBTV_HFT_2023242.WpfClient.ViewModels
         }
 
         [RelayCommand(CanExecute = nameof(CanExecuteCarAction))]
-        public void DeleteCar() { rest.Delete(SelectedCar.Id, "car"); RefreshAll(); }
+        public void DeleteCar()
+        {
+            int idToDelete = SelectedCar.Id;
+
+            rest.Delete(idToDelete, "car");
+            RefreshAll();
+
+            string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", $"{idToDelete}.jpg");
+            if (File.Exists(imagePath))
+            {
+                File.Delete(imagePath);
+            }
+        }
 
         //rental shop
         private bool CanExecuteShopAction() => SelectedShop != null;
@@ -112,44 +143,83 @@ namespace IPNBTV_HFT_2023242.WpfClient.ViewModels
 
 
         // non-crud
+
         [RelayCommand]
         public void GetMostRentedCarInRentalShop()
         {
             var result = rest.Get<IEnumerable<MostRentedCarInfo>>(SearchShopId, "noncrud/getmostrentedcarinrentalshop").FirstOrDefault();
             if (result != null)
-                MessageBox.Show($"Car: {result.Car.Brand} {result.Car.Model}\nRentals: {result.NumberOfRentalEvents}", "Most Rented Car", MessageBoxButton.OK, MessageBoxImage.Information);
+                QueryResult = $"Most Rented Car in Shop [{SearchShopId}]:\n\nBrand: {result.Car.Brand}\nModel: {result.Car.Model}\nTotal Rentals: {result.NumberOfRentalEvents}";
             else
-                MessageBox.Show("No data found.", "Result", MessageBoxButton.OK, MessageBoxImage.Warning);
+                QueryResult = "No data found for this shop.";
         }
 
         [RelayCommand]
         public void GetNumberOfRentalEventsForCarInShop()
         {
             var result = rest.GetSingle<int>(SearchCarId, SearchShopId, "noncrud/getnumberofrentaleventsforcarinshop");
-            MessageBox.Show($"Number of events: {result}", "Rental Count", MessageBoxButton.OK, MessageBoxImage.Information);
+            QueryResult = $"Car [{SearchCarId}] in Shop [{SearchShopId}] has been rented:\n\n{result} times.";
         }
 
         [RelayCommand]
         public void OrderByMostRentals()
         {
             var result = rest.Get<IEnumerable<MostRentedCarInfo>>(SearchStartDate, SearchEndDate, "noncrud/orderbymostrentals").ToList();
-            var text = string.Join("\n", result.Select(x => $"{x.Car.Brand} {x.Car.Model} - {x.NumberOfRentalEvents} rentals"));
-            MessageBox.Show(text, "Most Rentals in Period", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (result.Count > 0)
+                QueryResult = $"Most Rentals between {SearchStartDate:yyyy-MM-dd} and {SearchEndDate:yyyy-MM-dd}:\n\n" +
+                              string.Join("\n", result.Select((x, index) => $"{index + 1}. {x.Car.Brand} {x.Car.Model} - {x.NumberOfRentalEvents} rentals"));
+            else
+                QueryResult = "No rentals found in this period.";
         }
 
         [RelayCommand]
         public void GetCustomersWithAutomaticTransmission()
         {
             var result = rest.GetSingle<IEnumerable<string>>("noncrud/getcustomerswithautomatictransmission").ToList();
-            MessageBox.Show(string.Join("\n", result), "Automatic Car Customers", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (result.Count > 0)
+                QueryResult = "Customers who rented automatic cars:\n\n" + string.Join("\n", result.Select(x => "• " + x));
+            else
+                QueryResult = "No customers found.";
         }
 
         [RelayCommand]
         public void GetRentalShopsWithCarColor()
         {
             var result = rest.Get<IEnumerable<RentalShop>>(SearchColor, "noncrud/getrentalshopswithcarcolor").ToList();
-            var text = string.Join("\n", result.Select(x => $"{x.Name} ({x.City})"));
-            MessageBox.Show(text, $"Shops with {SearchColor} cars", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (result.Count > 0)
+                QueryResult = $"Rental Shops with '{SearchColor}' cars:\n\n" + string.Join("\n\n", result.Select(x => $"🏢 {x.Name}\n📍 {x.City}, {x.Address}"));
+            else
+                QueryResult = $"No shops found with '{SearchColor}' cars.";
+        }
+
+
+        private void RestoreBaseImages()
+        {
+            try
+            {
+                
+                string projectImagesFolder = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Images"));
+
+                
+                string targetFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+
+                if (Directory.Exists(projectImagesFolder))
+                {
+                    if (!Directory.Exists(targetFolder)) Directory.CreateDirectory(targetFolder);
+
+                    
+                    foreach (string sourceFile in Directory.GetFiles(projectImagesFolder, "*.jpg"))
+                    {
+                        string fileName = Path.GetFileName(sourceFile);
+                        string destFile = Path.Combine(targetFolder, fileName);
+                        File.Copy(sourceFile, destFile, overwrite: true);
+                    }
+                }
+            }
+            catch
+            {
+                
+            }
         }
     }
 

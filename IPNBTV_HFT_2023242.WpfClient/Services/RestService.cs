@@ -138,7 +138,7 @@ namespace IPNBTV_HFT_2023242.WpfClient.Services
         public T Get<T>(DateTime startDate, DateTime endDate, string endpoint)
         {
             T item = default(T);
-            HttpResponseMessage response = client.GetAsync(endpoint + "/" + startDate.ToString() + "/" + endDate.ToString()).GetAwaiter().GetResult();
+            HttpResponseMessage response = client.GetAsync(endpoint + "/" + startDate.ToString("yyyy-MM-dd") + "/" + endDate.ToString("yyyy-MM-dd")).GetAwaiter().GetResult();
             if (response.IsSuccessStatusCode)
             {
                 item = response.Content.ReadAsAsync<T>().GetAwaiter().GetResult();
